@@ -7,6 +7,7 @@
 			<li class="infra">infra</li>
 			<li class="old-new-york">old new york</li>
 			<li class="bott">bottanicals</li>
+			<li class="shapes%2C-patterns-%26-textures">patterns 01</li>
 		</ul>
 	</nav>
 
@@ -121,6 +122,7 @@
 		// https://unsplash.com/collections/3178572/winter
 		// https://unsplash.com/collections/219941/architecture%2C-buildings%2C-spaces
 		// https://unsplash.com/collections/3694365/gradient-nation
+		// https://unsplash.com/collections/227/shapes%2C-patterns-%26-textures
 		//
 		//
 		// ————— RWW —————
@@ -128,8 +130,8 @@
 		// https://unsplash.com/collections/9710463/infra
 		// https://unsplash.com/collections/9736914/old-new-york
 		// https://unsplash.com/collections/9736875/bott
-		// 
-		// 
+		//
+		//
 		let swpColl = $(this).attr("class");
 		switch (swpColl) {
 			case "cpunc":
@@ -148,6 +150,10 @@
 
 			case "bott":
 				swapper("9736875");
+				break;
+
+			case "shapes%2C-patterns-%26-textures":
+				swapper("227");
 				break;
 
 			default:
