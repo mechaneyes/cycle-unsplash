@@ -9,150 +9,139 @@
 		</ul>
 	</nav>
 
-	<div class="random-image"></div>
+	<div class="randomImage"></div>
 </div>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-
 <script>
-	// https://unsplash.com/collections/3178572/winter
-	// https://unsplash.com/collections/219941/architecture%2C-buildings%2C-spaces
-	// https://unsplash.com/collections/3694365/gradient-nation
+	let nextColl = "2598205";
+	let reset = false;
 
-	$(function() {
-		let theColl = "2598205";
-		let swColl;
-		let ranNum;
-		let reset = false;
+	const imgHldr = $(".randomImage");
 
-		let imgHldr = $(".random-image");
-
-		let theAni = async function(plugColl) {
-			// Adding a random number to the URL ensures that
-			// a new, random image is pulled. Otherwise it just
-			// pulls the same image every time
-			//
-			let ranNum = new Date().getTime();
-
-
-			console.log("");
-			console.log("collection: " + plugColl);			
-
-
-			// Fetch the image from Unsplash using on(load).
-			// This allows the image to fully load before
-			// fading in and onto the stage
-			// 
-			// Execute looping by recurssively calling theAni()
-			//
-			var imgFetch = await $("<img />")
-				.attr(
-					"src",
-					"https://source.unsplash.com/collection/" +
-						plugColl +
-						"/3840x2160?" +
-						ranNum
-				)
-				.on("load", function() {
-					if (
-						!this.complete ||
-						typeof this.naturalWidth == "undefined" ||
-						this.naturalWidth == 0
-					) {
-						console.log("busted image!");
-					} else {
-						let theImgUrl = imgFetch.attr('src')
-						console.log('theImgUrl: ' + theImgUrl)
-						imgHldr.css({'background-image': "url(" + theImgUrl + ")"})
-
-							// Animate dis bish.
-							// Fade in, hold, fade out, rinse and repeat
-							//
-							.fadeIn(2000)
-							.delay(12000)
-							.fadeOut(2000)
-
-							.queue(function(next) {
-								theAni(plugColl);
-								next();
-							});
-					}
-				});
-		};
-
-		let unsp = plugColl => {
-			// Loop through current collection
-			//
-			if (reset === false) {
-				theAni(plugColl);
-
-				// Switch to new, selected collection
-				//
-			} else {
-				console.log("NEW collection : " + theColl);
-
-				reset = false;
-
-				// Restart the function with the new collection
-				//
-				theAni(plugColl);
-			}
-		};
-
-		// Fade out current image +
-		// Trigger new collection load
+	let theAni = async plugColl => {
+		// Adding a random number to the URL ensures that
+		// a new, random image is pulled. Otherwise it just
+		// pulls the same image every time
 		//
-		let swapper = theColl => {
-			imgHldr
-				.fadeOut(2000)
-				.delay(2000)
-				.queue(function() {
-					unsp(theColl);
-				});
-		};
+		let ranNum = new Date().getTime();
 
-		// Trigger the switch to the selected collection
+		console.log("");
+		console.log("collection: " + plugColl);
+
+		// Fetch the image from Unsplash using on(load).
+		// This allows the image to fully load before
+		// fading in and onto the stage
 		//
-		$("li").click(function() {
-			// Tell unsp() there's a new collection to load
+		// Execute looping by recurssively calling theAni()
+		//
+		var imgFetch = await $("<img />")
+			.attr(
+				"src",
+				"https://source.unsplash.com/collection/" +
+					plugColl +
+					"/3840x2160?" +
+					ranNum
+			)
+			.on("load", function() {
+				if (
+					!this.complete ||
+					typeof this.naturalWidth == "undefined" ||
+					this.naturalWidth == 0
+				) {
+					console.log("busted image!");
+				} else {
+					let theImgUrl = imgFetch.attr("src");
+					console.log("theImgUrl: " + theImgUrl);
+					imgHldr
+						.css({ "background-image": "url(" + theImgUrl + ")" })
+
+						// Animate dis bish.
+						// Fade in, hold, fade out, rinse and repeat
+						//
+						.fadeIn(2000)
+						.delay(12000)
+						.fadeOut(2000)
+
+						// Trigger the loop
+						//
+						.queue(function(next) {
+							theAni(plugColl);
+							next();
+						});
+				}
+			});
+	};
+
+	let unsp = plugColl => {
+		// Loop through current collection
+		//
+		if (reset === false) {
+			theAni(plugColl);
+
+			// Switch to new, selected collection
 			//
-			reset = true;
+		} else {
+			console.log("NEW collection : " + plugColl);
 
-			// Strip current animation chain and reinit via switch below.
-			// Current image will fade out before running unsp()
+			reset = false;
+
+			// Restart the function with the new collection
 			//
-			imgHldr.clearQueue();
+			theAni(plugColl);
+		}
+	};
 
-			swColl = $(this).attr("class");
-
-			switch (swColl) {
-				case "cpunc":
-					console.log("swColl: " + swColl);
-
-					// theColl = "2598205";
-					swapper("3178572");
-					break;
-
-				case "infra":
-					console.log("swColl: " + swColl);
-
-					// theColl = "9710463";
-					swapper("219941");
-					break;
-
-				case "milkin":
-					swapper("3694365");
-					break;
-
-				default:
-					unsp("2598205");
-			}
+	// Fade out current image +
+	// Trigger new collection load
+	//
+	let swapper = nextColl => {
+		imgHldr.fadeOut(2000, function() {
+			unsp(nextColl);
 		});
+	};
 
-		// Init ... fire the fucker up
+	// Trigger the switch to the selected collection
+	//
+	$("li").click(function() {
+		// Tell unsp() there's a new collection to load
 		//
-		(function() {
-			unsp("3178572");
-		})();
+		reset = true;
+
+		// Strip current animation chain and reinit via switch below.
+		// Current image will fade out before running unsp()
+		//
+		imgHldr.stop().clearQueue();
+
+		// https://unsplash.com/collections/3178572/winter
+		// https://unsplash.com/collections/219941/architecture%2C-buildings%2C-spaces
+		// https://unsplash.com/collections/3694365/gradient-nation
+
+		let swpColl = $(this).attr("class");
+		switch (swpColl) {
+			case "cpunc":
+				console.log("swpColl: " + swpColl);
+
+				swapper("3178572");
+				break;
+
+			case "infra":
+				console.log("swpColl: " + swpColl);
+
+				swapper("219941");
+				break;
+
+			case "milkin":
+				swapper("3694365");
+				break;
+
+			default:
+				unsp("2598205");
+		}
 	});
+
+	// Init ... fire the fucker up
+	//
+	(function() {
+		unsp("3178572");
+	})();
 </script>
