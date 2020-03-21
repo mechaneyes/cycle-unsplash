@@ -118,24 +118,22 @@ body * {
 
 <script>
 	$(function() {
-		let theColl = "2598205";
+        let theColl = "2598205";
+        let swColl
 		let ranNum;
 		let reset = false;
 
 		// Fetch from Unsplash
 		//
-		let unsp = (theColl, reset) => {
+		let unsp = plugColl => {
 			ranNum = new Date().getTime();
-			console.log("ranNum: " + ranNum);
-
-			console.log("theColl: " + theColl);
 			console.log("");
 
 			$(".random-image")
 				.css({
 					"background-image":
 						"url(https://source.unsplash.com/collection/" +
-						theColl +
+						plugColl +
 						"/3840x2160?" +
 						ranNum +
 						")"
@@ -146,37 +144,63 @@ body * {
 				.fadeOut(2000)
 				.delay(1000)
 
-				.queue(function(n) {
-					unsp(theColl);
-					n();
+				.queue(function(next) {
+                    let that = $(this)
+                    
+                    // Loop through default or selected collection
+                    // 
+					if (reset === false) {
+                        console.log('reset: ' + reset)
+                        console.log('plugColl: ' + plugColl)
+
+						unsp(plugColl);
+                        next();
+                    
+                    // Switch to new, selected collection
+                    // 
+					} else {
+                        console.log('reset: ' + reset)
+                        console.log('new collection : ' + theColl)
+
+                        reset = false
+                        
+                        // kill the running queue.
+                        // reinit it with the new collection
+                        // 
+                        that.clearQueue()
+                        unsp(theColl);
+                    }
 				});
 		};
 
-		unsp("2598205");
 
+        // Fire it up
+        // 
+        console.log('theColl: ' + theColl)
+        unsp("2598205");
+        
+
+        // Trigger the switch to the selected collection
+        // 
 		$("li").click(function() {
-			isRunning = true;
+			reset = true
 
-			let swColl = $(this).attr("class");
+			swColl = $(this).attr("class");
 
 			switch (swColl) {
 				case "cpunc":
-
                     console.log("swColl: " + swColl);
-                    // $(".random-image").dequeue()
-                    // $(".random-image").fadeOut(2000, function(){
-                    //     console.log('fader')
-                    //     unsp("2598205");
-                    // })
-                    unsp("2598205");
-                    break;
-
+                    
+                    theColl = "2598205"
+					unsp(theColl);
+					break;
 
 				case "infra":
                     console.log("swColl: " + swColl);
-					unsp("9710463");
-                    break;
                     
+                    theColl = "9710463"
+					unsp(theColl);
+					break;
 
 				default:
 					unsp("2598205");
