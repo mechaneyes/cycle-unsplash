@@ -5,7 +5,8 @@
 		<ul>
 			<li class="cpunc">cpunc</li>
 			<li class="infra">infra</li>
-			<li class="milkn">milkn</li>
+			<li class="oldNY">old new york</li>
+			<li class="bott">bottanicals</li>
 		</ul>
 	</nav>
 
@@ -112,16 +113,27 @@
 		//
 		imgHldr.stop().clearQueue();
 
+		// ————— ACCOUNTS —————
+		// https://unsplash.com/@nypl
+		//
+		//
+		// ————— COLLECTIONS —————
 		// https://unsplash.com/collections/3178572/winter
 		// https://unsplash.com/collections/219941/architecture%2C-buildings%2C-spaces
 		// https://unsplash.com/collections/3694365/gradient-nation
+		//
+		//
+		// ————— MINE —————
+		// https://unsplash.com/collections/2598205/cpunc
+		// https://unsplash.com/collections/9736875/bott
+		// https://unsplash.com/collections/9736914/old-new-york
 
 		let swpColl = $(this).attr("class");
 		switch (swpColl) {
 			case "cpunc":
 				console.log("swpColl: " + swpColl);
 
-				swapper("3178572");
+				swapper("2598205");
 				break;
 
 			case "infra":
@@ -130,8 +142,12 @@
 				swapper("219941");
 				break;
 
-			case "milkin":
-				swapper("3694365");
+			case "oldNY":
+				swapper("9736914");
+				break;
+
+			case "bott":
+				swapper("9736875");
 				break;
 
 			default:
@@ -142,6 +158,6 @@
 	// Init ... fire the fucker up
 	//
 	(function() {
-		unsp("3178572");
+		unsp("9736875");
 	})();
 </script>

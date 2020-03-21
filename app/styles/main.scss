@@ -54,14 +54,17 @@ body {
 
 		ul {
 			display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-column-gap: 30px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 0;
+            padding: 0 30px;
             list-style-type: none;
 		}
 
 		li {
+            padding: 0 40px;
             font-size: 60px;
             color: deepskyblue;
             text-align: center;
