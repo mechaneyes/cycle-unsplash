@@ -25,7 +25,7 @@
 		let ranNum;
 		let reset = false;
 
-		let theImage = $(".random-image");
+		let imgHldr = $(".random-image");
 
 		let theAni = plugColl => {
 			// Adding a random number to the URL ensures that
@@ -39,7 +39,13 @@
 			console.log("collection: " + plugColl);			
 
 
-			var img = $("<img />")
+			// Fetch the image from Unsplash using on(load).
+			// This allows the image to fully load before
+			// fading in and onto the stage
+			// 
+			// Execute looping by recurssively calling theAni()
+			//
+			var imgFetch = $("<img />")
 				.attr(
 					"src",
 					"https://source.unsplash.com/collection/" +
@@ -55,18 +61,16 @@
 					) {
 						console.log("busted image!");
 					} else {
-						let theImgUrl = img.attr('src')
+						let theImgUrl = imgFetch.attr('src')
 						console.log('theImgUrl: ' + theImgUrl)
-						theImage.css({'background-image': "url(" + theImgUrl + ")"})
+						imgHldr.css({'background-image': "url(" + theImgUrl + ")"})
 
-							// Animate the bish.
-							// Set delay to let the image load before displaying it,
-							// fade it in, hold, fade out, rinse and repeat
+							// Animate dis bish.
+							// Fade in, hold, fade out, rinse and repeat
 							//
 							.fadeIn(2000)
 							.delay(12000)
 							.fadeOut(2000)
-							.delay(1000)
 
 							.queue(function(next) {
 								theAni(plugColl);
@@ -74,38 +78,8 @@
 							});
 					}
 				});
-
-			// theImage
-			// 	.css({
-			// 		"background-image":
-			// 			"url(https://source.unsplash.com/collection/" +
-			// 			plugColl +
-			// 			"/3840x2160?" +
-			// 			ranNum +
-			// 			")"
-			// 	})
-
-			// 	// Animate the bish.
-			// 	// Set delay to let the image load before displaying it,
-			// 	// fade it in, hold, fade out, rinse and repeat
-			// 	//
-			// 	.delay(1500)
-			// 	.fadeIn(2000)
-			// 	.delay(12000)
-			// 	.fadeOut(2000)
-			// 	.delay(1000)
-
-			// 	.queue(function(next) {
-			// 		theAni(plugColl);
-			// 		next();
-			// 	});
 		};
 
-		// Fetch from Unsplash
-		//
-		// Perform the animations and looping
-		// by recurssively calling the function
-		//
 		let unsp = plugColl => {
 			// Loop through current collection
 			//
@@ -129,7 +103,7 @@
 		// Trigger new collection load
 		//
 		let swapper = theColl => {
-			theImage
+			imgHldr
 				.fadeOut(2000)
 				.delay(2000)
 				.queue(function() {
@@ -147,7 +121,7 @@
 			// Strip current animation chain and reinit via switch below.
 			// Current image will fade out before running unsp()
 			//
-			theImage.clearQueue();
+			imgHldr.clearQueue();
 
 			swColl = $(this).attr("class");
 
