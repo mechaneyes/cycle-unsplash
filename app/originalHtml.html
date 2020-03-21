@@ -1,6 +1,5 @@
 <div class="ranWrapper">
 	<div class="hoverrerr"></div>
-
 	<nav>
 		<ul>
 			<li class="cpunc">cpunc</li>
@@ -10,15 +9,16 @@
 			<li class="shapes%2C-patterns-%26-textures">patterns 01</li>
 		</ul>
 	</nav>
-
 	<div class="randomImage"></div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
 
 <script>
 	let nextColl = "2598205";
 	let reset = false;
-
 	const imgHldr = $(".randomImage");
+	let tl;
 
 	let theAni = async plugColl => {
 		// Adding a random number to the URL ensures that
@@ -31,8 +31,7 @@
 		console.log("collection: " + plugColl);
 
 		// Fetch the image from Unsplash using on(load).
-		// This allows the image to fully load before
-		// fading in and onto the stage
+		// The image will be fully load before fading onto the stage
 		//
 		// Execute looping by recurssively calling theAni()
 		//
@@ -54,65 +53,34 @@
 				} else {
 					let theImgUrl = imgFetch.attr("src");
 					console.log("theImgUrl: " + theImgUrl);
-					imgHldr
-						.css({ "background-image": "url(" + theImgUrl + ")" })
+					imgHldr.css("background-image", "url(" + theImgUrl + ")");
 
-						// Animate dis bish.
-						// Fade in, hold, fade out, rinse and repeat
-						//
-						.fadeIn(2000)
-						.delay(12000)
-						.fadeOut(2000)
-
-						// Trigger the loop
-						//
-						.queue(function(next) {
-							theAni(plugColl);
-							next();
-						});
+					tl = new TimelineMax();
+					tl.to(imgHldr, { duration: 2, opacity: 1 });
+					tl.to(imgHldr, { duration: 3, opacity: 0, delay: 10 });
+					tl.add(function() {
+						theAni(plugColl);
+					});
 				}
 			});
 	};
+	
 
-	let unsp = plugColl => {
-		// Loop through current collection
-		//
-		if (reset === false) {
-			theAni(plugColl);
-
-			// Switch to new, selected collection
-			//
-		} else {
-			console.log("NEW COLLECTION : " + plugColl);
-
-			reset = false;
-
-			// Restart the function with the new collection
-			//
-			theAni(plugColl);
-		}
-	};
 
 	// Fade out current image +
 	// Trigger new collection load
 	//
 	let swapper = nextColl => {
-		imgHldr.fadeOut(2000, function() {
-			unsp(nextColl);
+		tl.clear();
+		tl.to(imgHldr, { duration: 1, opacity: 0 });
+		tl.add(function() {
+			theAni(nextColl);
 		});
 	};
 
 	// Trigger the switch to the selected collection
 	//
 	$("li").click(function() {
-		// Tell unsp() there's a new collection to load
-		//
-		reset = true;
-
-		// Strip current animation chain and reinit via switch below.
-		// Current image will fade out before running unsp()
-		//
-		imgHldr.stop().clearQueue();
 
 		// ————— ACCOUNTS —————
 		// https://unsplash.com/@nypl
@@ -161,9 +129,9 @@
 		}
 	});
 
-	// Init ... fire the fucker up
+	// Init ... Fire the fucker up
 	//
 	(function() {
-		unsp("9736875");
+		theAni(nextColl);
 	})();
 </script>
