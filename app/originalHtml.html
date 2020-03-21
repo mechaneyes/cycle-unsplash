@@ -15,6 +15,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
+	// https://unsplash.com/collections/446755/baby-it's-cold-outside
+	// https://unsplash.com/collections/1131562/insert-coin(s)
+
 	$(function() {
 		let theColl = "2598205";
 		let swColl;
@@ -23,20 +26,17 @@
 
 		let theImage = $(".random-image");
 
-		// Fetch from Unsplash
-		//
-		// Perform the animations and looping
-		// by recurssively calling the function
-		//
-		let unsp = plugColl => {
+		let theAni = plugColl => {
 			// Adding a random number to the URL ensures that
 			// a new, random image is pulled. Otherwise it just
 			// pulls the same image every time
 			//
 			let ranNum = new Date().getTime();
+
+			console.log("collection: " + plugColl);
 			console.log("");
 
-			$(".random-image")
+			theImage
 				.css({
 					"background-image":
 						"url(https://source.unsplash.com/collection/" +
@@ -46,51 +46,58 @@
 						")"
 				})
 
-				// Animate that baitch.
-				// Set delay to let the image load before displaying it
+				// Animate the bish.
+				// Set delay to let the image load before displaying it,
+				// fade it in, hold, fade out, rinse and repeat
 				//
-				.delay(200)
+				.delay(1500)
 				.fadeIn(2000)
-				.delay(10000)
+				.delay(12000)
 				.fadeOut(2000)
 				.delay(1000)
 
 				.queue(function(next) {
-					that = $(this);
-					console.log("that: " + that);
-
-					// Loop through current collection
-					//
-					if (reset === false) {
-						console.log("reset: " + reset);
-						console.log("collection: " + plugColl);
-
-						unsp(plugColl);
-						next();
-
-						// Switch to new, selected collection
-						//
-					} else {
-						console.log("reset: " + reset);
-						console.log("NEW collection : " + theColl);
-
-						reset = false;
-
-						// Kill the running queue +
-						// Restart the function with the new collection
-						//
-						that.clearQueue();
-						unsp(theColl);
-					}
+					theAni(plugColl);
+					next();
 				});
 		};
 
-		// Init ... fire the fucker up
+		// Fetch from Unsplash
 		//
-		(function() {
-			console.log("theColl: " + theColl);
-			unsp("2598205");
-		})();
+		// Perform the animations and looping
+		// by recurssively calling the function
+		//
+		let unsp = plugColl => {
+			// Loop through current collection
+			//
+			if (reset === false) {
+
+				theAni(plugColl);
+
+			// Switch to new, selected collection
+			//
+			} else {
+				console.log("NEW collection : " + theColl);
+
+				reset = false;
+
+				// Restart the function with the new collection
+				//
+				theAni(plugColl);
+			}
+		};
+
+		// Fade out current image +
+		// Trigger new collection load
+		// 
+		let swapper = theColl => {
+			theImage
+				.fadeOut(2000)
+				.delay(2000)
+				.queue(function() {
+					unsp(theColl);
+				});
+		};
 
 		// Trigger the switch to the selected collection
 		//
@@ -101,7 +108,7 @@
 
 			// Strip current animation chain and reinit via switch below.
 			// Current image will fade out before running unsp()
-			// 
+			//
 			theImage.clearQueue();
 
 			swColl = $(this).attr("class");
@@ -110,28 +117,26 @@
 				case "cpunc":
 					console.log("swColl: " + swColl);
 
-					theColl = "2598205";
-					theImage
-						.fadeOut(2000)
-						.queue(function() {
-							unsp(theColl);
-						});
+					// theColl = "2598205";
+					swapper("1131562")
 					break;
 
 				case "infra":
 					console.log("swColl: " + swColl);
 
-					theColl = "9710463";
-					theImage
-						.fadeOut(2000)
-						.queue(function() {
-							unsp(theColl);
-						});
+					// theColl = "9710463";
+					swapper("446755")
 					break;
 
 				default:
 					unsp("2598205");
 			}
 		});
+
+		// Init ... fire the fucker up
+		//
+		(function() {
+			unsp("1131562");
+		})();
 	});
 </script>
