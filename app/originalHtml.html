@@ -16,85 +16,69 @@
 
 <script>
 	$(function() {
-
-        let theColl = "2598205"
-        let ranNum
-        let isRunning = false
-        
-
+		let theColl = "2598205";
+		let ranNum;
+		let reset = false;
 
 		// Fetch from Unsplash
 		//
-		let unsp = (theColl, isRunning) => {
+		let unsp = (theColl, reset) => {
+			ranNum = new Date().getTime();
+			console.log("ranNum: " + ranNum);
 
-            console.log('isRunning: ' + isRunning)
+			console.log("theColl: " + theColl);
+			console.log("");
 
-            ranNum = new Date().getTime()
-            console.log('ranNum: ' + ranNum)
+			$(".random-image")
+				.css({
+					"background-image":
+						"url(https://source.unsplash.com/collection/" +
+						theColl +
+						"/3840x2160?" +
+						ranNum +
+						")"
+				})
+				.delay(1000)
+				.fadeIn(2000)
+				.delay(10000)
+				.fadeOut(2000)
+				.delay(1000)
 
-            console.log('theColl: ' + theColl)
+				.queue(function(n) {
+					unsp(theColl);
+					n();
+				});
+		};
 
-            $(".random-image")
-			.css({
-				"background-image":
-					"url(https://source.unsplash.com/collection/" + theColl + "/3840x2160?" + ranNum + ")"
-            })
-            .delay(2000)
-            .fadeIn(2000)
-            .delay(10000)
-            .fadeOut(2000)
-            .queue(function() {
-                unsp(theColl, isRunning)
-            })
+		unsp("2598205");
 
-            // setTimeout(unsp(theColl, isRunning), 16100)
+		$("li").click(function() {
+			isRunning = true;
 
-        }
+			let swColl = $(this).attr("class");
 
+			switch (swColl) {
+				case "cpunc":
 
-
-        
-        unsp("2598205", isRunning)
-        // setInterval(() => unsp("2598205"), 16100)
-
-        
-
-        // if (!isRunning) {
-        //     unsp("2598205")
-        //     setInterval(() => unsp("2598205"), 16100)
-        // } else {
-        //     return
-        // }
-
-
-
-        // while (!isRunning) {
-        //     setInterval(() => unsp("2598205"), 16100)
-        // }
-        
-
-        
+                    console.log("swColl: " + swColl);
+                    // $(".random-image").dequeue()
+                    // $(".random-image").fadeOut(2000, function(){
+                    //     console.log('fader')
+                    //     unsp("2598205");
+                    // })
+                    unsp("2598205");
+                    break;
 
 
-        $('li').click(function() {
-            isRunning = true
+				case "infra":
+                    console.log("swColl: " + swColl);
+					unsp("9710463");
+                    break;
+                    
 
-            let swColl = $(this).attr('class')
-            console.log('swColl: ' + swColl)
-            
-            switch (swColl) {
-                case 'cpunc':
-                    unsp("2598205")
-                    setInterval(() => unsp("2598205"), 16100)
-                    break
-                case 'infra':
-                    unsp("9710463")
-                    setInterval(() => unsp("9710463"), 16100)
-                    break
-                default:
-                    setInterval(() => unsp("9710463"), 16100)
-
-            }
-        })
+				default:
+					unsp("2598205");
+			}
+		});
 	});
 </script>
