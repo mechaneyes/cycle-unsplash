@@ -12,7 +12,7 @@
 	<div class="random-image"></div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 
 <script>
 	// https://unsplash.com/collections/3178572/winter
@@ -27,7 +27,7 @@
 
 		let imgHldr = $(".random-image");
 
-		let theAni = plugColl => {
+		let theAni = async function(plugColl) {
 			// Adding a random number to the URL ensures that
 			// a new, random image is pulled. Otherwise it just
 			// pulls the same image every time
@@ -45,7 +45,7 @@
 			// 
 			// Execute looping by recurssively calling theAni()
 			//
-			var imgFetch = $("<img />")
+			var imgFetch = await $("<img />")
 				.attr(
 					"src",
 					"https://source.unsplash.com/collection/" +
