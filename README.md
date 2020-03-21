@@ -1,4 +1,5 @@
 ![Image of Main](rotator.jpg =1024x)
+<img src="rotator.jpg" alt="rotator" width="1024"/>
 
 
 
