@@ -1,4 +1,4 @@
-![Image of Main](rotator.jpg | width=1024)
+![Image of Main](rotator.jpg | 1024x)
 
 
 
