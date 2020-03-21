@@ -16,15 +16,24 @@
 
 <script>
 	$(function() {
-        let theColl = "2598205";
-        let swColl
+		let theColl = "2598205";
+		let swColl;
 		let ranNum;
 		let reset = false;
 
+		let theImage = $(".random-image");
+
 		// Fetch from Unsplash
 		//
+		// Perform the animations and looping
+		// by recurssively calling the function
+		//
 		let unsp = plugColl => {
-			ranNum = new Date().getTime();
+			// Adding a random number to the URL ensures that
+			// a new, random image is pulled. Otherwise it just
+			// pulls the same image every time
+			//
+			let ranNum = new Date().getTime();
 			console.log("");
 
 			$(".random-image")
@@ -36,68 +45,88 @@
 						ranNum +
 						")"
 				})
-				.delay(1000)
+
+				// Animate that baitch.
+				// Set delay to let the image load before displaying it
+				//
+				.delay(200)
 				.fadeIn(2000)
 				.delay(10000)
 				.fadeOut(2000)
 				.delay(1000)
 
 				.queue(function(next) {
-                    let that = $(this)
-                    
-                    // Loop through default or selected collection
-                    // 
+					that = $(this);
+					console.log("that: " + that);
+
+					// Loop through current collection
+					//
 					if (reset === false) {
-                        console.log('reset: ' + reset)
-                        console.log('plugColl: ' + plugColl)
+						console.log("reset: " + reset);
+						console.log("collection: " + plugColl);
 
 						unsp(plugColl);
-                        next();
-                    
-                    // Switch to new, selected collection
-                    // 
-					} else {
-                        console.log('reset: ' + reset)
-                        console.log('new collection : ' + theColl)
+						next();
 
-                        reset = false
-                        
-                        // kill the running queue.
-                        // reinit it with the new collection
-                        // 
-                        that.clearQueue()
-                        unsp(theColl);
-                    }
+						// Switch to new, selected collection
+						//
+					} else {
+						console.log("reset: " + reset);
+						console.log("NEW collection : " + theColl);
+
+						reset = false;
+
+						// Kill the running queue +
+						// Restart the function with the new collection
+						//
+						that.clearQueue();
+						unsp(theColl);
+					}
 				});
 		};
 
+		// Init ... fire the fucker up
+		//
+		(function() {
+			console.log("theColl: " + theColl);
+			unsp("2598205");
+		})();
 
-        // Fire it up
-        // 
-        console.log('theColl: ' + theColl)
-        unsp("2598205");
-        
-
-        // Trigger the switch to the selected collection
-        // 
+		// Trigger the switch to the selected collection
+		//
 		$("li").click(function() {
-			reset = true
+			// Tell unsp() there's a new collection to load
+			//
+			reset = true;
+
+			// Strip current animation chain and reinit via switch below.
+			// Current image will fade out before running unsp()
+			// 
+			theImage.clearQueue();
 
 			swColl = $(this).attr("class");
 
 			switch (swColl) {
 				case "cpunc":
-                    console.log("swColl: " + swColl);
-                    
-                    theColl = "2598205"
-					unsp(theColl);
+					console.log("swColl: " + swColl);
+
+					theColl = "2598205";
+					theImage
+						.fadeOut(2000)
+						.queue(function() {
+							unsp(theColl);
+						});
 					break;
 
 				case "infra":
-                    console.log("swColl: " + swColl);
-                    
-                    theColl = "9710463"
-					unsp(theColl);
+					console.log("swColl: " + swColl);
+
+					theColl = "9710463";
+					theImage
+						.fadeOut(2000)
+						.queue(function() {
+							unsp(theColl);
+						});
 					break;
 
 				default:
