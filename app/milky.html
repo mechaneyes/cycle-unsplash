@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>milky way</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+
+    <style>
+      body {
+        margin: 0;
+        background-color: #565656;
+        background-color: black;
+      }
+
+      .ranWrapper {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .random-image {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        /* object-fit: cover; */
+        background-repeat: no-repeat;
+        /* background-size: 100% auto; */
+      }
+
+    </style>
+  </head>
+  <body>
+
+
+
+
+
+    <div class="ranWrapper">
+        <div class="random-image"></div>
+    </div>
+    
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    
+
+    <script>
+      $(function(){
+
+
+        // Automatically reload the browser
+        setInterval(function() {
+
+          $('.random-image').fadeOut( 2000, function() {
+            window.location.reload();
+          });
+
+          
+
+
+        }, 10000);
+
+
+        $('.random-image').css({
+            'background-image' : 'url(https://source.unsplash.com/collection/4247859/3840x2160)'
+            // 'background-image' : 'url(https://source.unsplash.com/collection/227/3840x2160)'
+            // 'background-image' : 'url(https://source.unsplash.com/3840x2160?cityscape)'
+        }).fadeIn(1500);
+
+
+
+
+
+
+
+
+
+      })
+    </script>
+  </body>
+</html>

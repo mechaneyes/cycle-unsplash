@@ -1,0 +1,92 @@
+$fontFam_hel: 'Helvetica Neue',
+Helvetica,
+Arial,
+sans-serif;
+
+
+@import 'breakpoints';
+
+
+body {
+	margin: 0;
+	background-color: black;
+
+	* {
+		font-family: $fontFam_hel;
+	}
+}
+
+.ranWrapper {
+	position: relative;
+	width: 100vw;
+    height: 100vh;
+    
+    .hoverrerr {
+        // display: none;
+        position: absolute;
+        width: 100vw;
+        height: 200px;
+        // border: 1px solid tomato;
+
+        &:hover {
+            // border: 1px solid deepskyblue;
+
+            + nav {
+                opacity: 1;
+                transition: opacity 0.5s;
+            }
+        }
+    }
+
+	nav {
+        // display: none;
+		z-index: 2;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		width: auto;
+		padding: 40px;
+        border-bottom: 1px solid deepskyblue;
+        background: black;
+        opacity: 0;
+        // opacity: 1;
+        transition: opacity 0.5s;
+
+		ul {
+			display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-column-gap: 30px;
+            align-items: center;
+            padding: 0;
+            list-style-type: none;
+		}
+
+		li {
+            font-size: 60px;
+            color: deepskyblue;
+            text-align: center;
+            border-bottom: 1px solid black;
+            transition: color 0.2s;
+            
+            &:hover {
+                color: tomato;
+                border-bottom: 1px solid tomato;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+        }
+        
+        &:hover {
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+	}
+
+	.random-image {
+		z-index: 1;
+		width: 100vw;
+		height: 100vh;
+		display: none;
+		background-repeat: no-repeat;
+	}
+}

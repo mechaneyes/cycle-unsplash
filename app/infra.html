@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>infragreen</title>
+
+
+    <style>
+      body {
+        margin: 0;
+        background-color: #565656;
+        background-color: black;
+      }
+
+      .ranWrapper {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .random-image {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        background-repeat: no-repeat;
+      }
+
+    </style>
+  </head>
+  <body>
+
+
+
+
+
+    <div class="ranWrapper">
+        <div class="random-image"></div>
+    </div>
+    
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    
+
+    <script>
+      $(function(){
+
+
+        // Reload the browser
+        // 
+        setInterval(function() {
+
+          $('.random-image').fadeOut( 2000, function() {
+            window.location.reload();
+          });
+
+        }, 10000);
+
+
+
+
+        // Fetch from Unsplash
+        // 
+        $('.random-image').css({
+            'background-image' : 'url(https://source.unsplash.com/collection/2598205/3840x2160)'
+        }).fadeIn(1500);
+
+
+
+
+
+
+
+
+
+      })
+    </script>
+  </body>
+</html>

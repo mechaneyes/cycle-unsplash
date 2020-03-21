@@ -1,0 +1,100 @@
+<div class="ranWrapper">
+	<div class="hoverrerr"></div>
+
+	<nav>
+		<ul>
+			<li class="cpunc">cpunc</li>
+			<li class="infra">infra</li>
+			<li class="milkn">milkn</li>
+		</ul>
+	</nav>
+
+	<div class="random-image"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+	$(function() {
+
+        let theColl = "2598205"
+        let ranNum
+        let isRunning = false
+        
+
+
+		// Fetch from Unsplash
+		//
+		let unsp = (theColl, isRunning) => {
+
+            console.log('isRunning: ' + isRunning)
+
+            ranNum = new Date().getTime()
+            console.log('ranNum: ' + ranNum)
+
+            console.log('theColl: ' + theColl)
+
+            $(".random-image")
+			.css({
+				"background-image":
+					"url(https://source.unsplash.com/collection/" + theColl + "/3840x2160?" + ranNum + ")"
+            })
+            .delay(2000)
+            .fadeIn(2000)
+            .delay(10000)
+            .fadeOut(2000)
+            .queue(function() {
+                unsp(theColl, isRunning)
+            })
+
+            // setTimeout(unsp(theColl, isRunning), 16100)
+
+        }
+
+
+
+        
+        unsp("2598205", isRunning)
+        // setInterval(() => unsp("2598205"), 16100)
+
+        
+
+        // if (!isRunning) {
+        //     unsp("2598205")
+        //     setInterval(() => unsp("2598205"), 16100)
+        // } else {
+        //     return
+        // }
+
+
+
+        // while (!isRunning) {
+        //     setInterval(() => unsp("2598205"), 16100)
+        // }
+        
+
+        
+
+
+        $('li').click(function() {
+            isRunning = true
+
+            let swColl = $(this).attr('class')
+            console.log('swColl: ' + swColl)
+            
+            switch (swColl) {
+                case 'cpunc':
+                    unsp("2598205")
+                    setInterval(() => unsp("2598205"), 16100)
+                    break
+                case 'infra':
+                    unsp("9710463")
+                    setInterval(() => unsp("9710463"), 16100)
+                    break
+                default:
+                    setInterval(() => unsp("9710463"), 16100)
+
+            }
+        })
+	});
+</script>
