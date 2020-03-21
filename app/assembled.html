@@ -125,7 +125,7 @@ body * {
 		<ul>
 			<li class="cpunc">cpunc</li>
 			<li class="infra">infra</li>
-			<li class="oldNY">old new york</li>
+			<li class="old-new-york">old new york</li>
 			<li class="bott">bottanicals</li>
 		</ul>
 	</nav>
@@ -202,7 +202,7 @@ body * {
 			// Switch to new, selected collection
 			//
 		} else {
-			console.log("NEW collection : " + plugColl);
+			console.log("NEW COLLECTION : " + plugColl);
 
 			reset = false;
 
@@ -243,26 +243,26 @@ body * {
 		// https://unsplash.com/collections/3694365/gradient-nation
 		//
 		//
-		// ————— MINE —————
+		// ————— RWW —————
 		// https://unsplash.com/collections/2598205/cpunc
-		// https://unsplash.com/collections/9736875/bott
+		// https://unsplash.com/collections/9710463/infra
 		// https://unsplash.com/collections/9736914/old-new-york
-
+		// https://unsplash.com/collections/9736875/bott
+		// 
+		// 
 		let swpColl = $(this).attr("class");
 		switch (swpColl) {
 			case "cpunc":
 				console.log("swpColl: " + swpColl);
-
 				swapper("2598205");
 				break;
 
 			case "infra":
 				console.log("swpColl: " + swpColl);
-
-				swapper("219941");
+				swapper("9710463");
 				break;
 
-			case "oldNY":
+			case "old-new-york":
 				swapper("9736914");
 				break;
 
