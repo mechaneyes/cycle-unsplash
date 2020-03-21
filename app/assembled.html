@@ -128,8 +128,9 @@ body * {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
-	// https://unsplash.com/collections/446755/baby-it's-cold-outside
-	// https://unsplash.com/collections/1131562/insert-coin(s)
+	// https://unsplash.com/collections/3178572/winter
+	// https://unsplash.com/collections/219941/architecture%2C-buildings%2C-spaces
+	// https://unsplash.com/collections/3694365/gradient-nation
 
 	$(function() {
 		let theColl = "2598205";
@@ -146,33 +147,71 @@ body * {
 			//
 			let ranNum = new Date().getTime();
 
-			console.log("collection: " + plugColl);
-			console.log("");
 
-			theImage
-				.css({
-					"background-image":
-						"url(https://source.unsplash.com/collection/" +
+			console.log("");
+			console.log("collection: " + plugColl);			
+
+
+			var img = $("<img />")
+				.attr(
+					"src",
+					"https://source.unsplash.com/collection/" +
 						plugColl +
 						"/3840x2160?" +
-						ranNum +
-						")"
-				})
+						ranNum
+				)
+				.on("load", function() {
+					if (
+						!this.complete ||
+						typeof this.naturalWidth == "undefined" ||
+						this.naturalWidth == 0
+					) {
+						console.log("busted image!");
+					} else {
+						let theImgUrl = img.attr('src')
+						console.log('theImgUrl: ' + theImgUrl)
+						theImage.css({'background-image': "url(" + theImgUrl + ")"})
 
-				// Animate the bish.
-				// Set delay to let the image load before displaying it,
-				// fade it in, hold, fade out, rinse and repeat
-				//
-				.delay(1500)
-				.fadeIn(2000)
-				.delay(12000)
-				.fadeOut(2000)
-				.delay(1000)
+							// Animate the bish.
+							// Set delay to let the image load before displaying it,
+							// fade it in, hold, fade out, rinse and repeat
+							//
+							.fadeIn(2000)
+							.delay(12000)
+							.fadeOut(2000)
+							.delay(1000)
 
-				.queue(function(next) {
-					theAni(plugColl);
-					next();
+							.queue(function(next) {
+								theAni(plugColl);
+								next();
+							});
+					}
 				});
+
+			// theImage
+			// 	.css({
+			// 		"background-image":
+			// 			"url(https://source.unsplash.com/collection/" +
+			// 			plugColl +
+			// 			"/3840x2160?" +
+			// 			ranNum +
+			// 			")"
+			// 	})
+
+			// 	// Animate the bish.
+			// 	// Set delay to let the image load before displaying it,
+			// 	// fade it in, hold, fade out, rinse and repeat
+			// 	//
+			// 	.delay(1500)
+			// 	.fadeIn(2000)
+			// 	.delay(12000)
+			// 	.fadeOut(2000)
+			// 	.delay(1000)
+
+			// 	.queue(function(next) {
+			// 		theAni(plugColl);
+			// 		next();
+			// 	});
 		};
 
 		// Fetch from Unsplash
@@ -184,11 +223,10 @@ body * {
 			// Loop through current collection
 			//
 			if (reset === false) {
-
 				theAni(plugColl);
 
-			// Switch to new, selected collection
-			//
+				// Switch to new, selected collection
+				//
 			} else {
 				console.log("NEW collection : " + theColl);
 
@@ -202,7 +240,7 @@ body * {
 
 		// Fade out current image +
 		// Trigger new collection load
-		// 
+		//
 		let swapper = theColl => {
 			theImage
 				.fadeOut(2000)
@@ -231,14 +269,18 @@ body * {
 					console.log("swColl: " + swColl);
 
 					// theColl = "2598205";
-					swapper("1131562")
+					swapper("3178572");
 					break;
 
 				case "infra":
 					console.log("swColl: " + swColl);
 
 					// theColl = "9710463";
-					swapper("446755")
+					swapper("219941");
+					break;
+
+				case "milkin":
+					swapper("3694365");
 					break;
 
 				default:
@@ -249,7 +291,7 @@ body * {
 		// Init ... fire the fucker up
 		//
 		(function() {
-			unsp("1131562");
+			unsp("3178572");
 		})();
 	});
 </script>
